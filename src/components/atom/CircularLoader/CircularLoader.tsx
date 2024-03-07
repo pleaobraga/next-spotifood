@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 interface CircularLoaderProps {
-  size: number
+  size?: number
 }
 
 export function CircularLoader({ size = 32 }: CircularLoaderProps) {
