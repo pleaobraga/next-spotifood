@@ -8,7 +8,7 @@ interface FilterButtonProps {
 const FilterButton = ({ handleClick }: FilterButtonProps) => {
   return (
     <IconButton
-      className="rounded-full p-3 hover:bg-gray"
+      className="hover:bg-gray rounded-full p-3"
       onClick={handleClick}
       aria-label="filter"
     >
