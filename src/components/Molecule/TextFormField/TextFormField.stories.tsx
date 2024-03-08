@@ -2,52 +2,55 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { TextFormField } from '.'
 import { Form } from '@radix-ui/react-form'
 
-function Component({
-  name,
-  value,
-  placeHolder,
-}: {
-  name: string
-  value: string
-  placeHolder?: string
-}) {
-  return (
-    <Form className="w-[200px]">
-      <TextFormField.Root name={name}>
-        <TextFormField.Label name={name} />
-        <TextFormField.Input
-          name={name}
-          value={value}
-          placeHolder={placeHolder}
-        />
-      </TextFormField.Root>
-    </Form>
-  )
-}
-
 const meta = {
   title: 'Components/ Molecule/TextFormField',
-  component: Component,
+  component: TextFormField.Root,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof Component>
+} satisfies Meta<typeof TextFormField.Root>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
+function defaultChildren() {
+  return (
+    <>
+      <TextFormField.Label />
+      <TextFormField.Input placeHolder="Type here" />
+    </>
+  )
+}
+
 export const Default: Story = {
   args: {
     name: 'test',
-    value: 'test',
+    children: defaultChildren(),
+  },
+  render: ({ name, children }) => {
+    return (
+      <Form className="w-[200px]">
+        <TextFormField.Root name={name}>{children}</TextFormField.Root>
+      </Form>
+    )
   },
 }
 
-export const NoValue: Story = {
+function withoutLabelChildren() {
+  return <TextFormField.Input placeHolder="Type here" />
+}
+
+export const WithoutLabel: Story = {
   args: {
     name: 'test',
-    value: '',
-    placeHolder: 'Type here',
+    children: withoutLabelChildren(),
+  },
+  render: ({ name, children }) => {
+    return (
+      <Form className="w-[200px]">
+        <TextFormField.Root name={name}>{children}</TextFormField.Root>
+      </Form>
+    )
   },
 }

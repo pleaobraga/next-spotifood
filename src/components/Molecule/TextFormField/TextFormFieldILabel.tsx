@@ -1,13 +1,17 @@
 import { Label } from '@radix-ui/react-form'
 
+import { useTextFormField } from './useTextFormField'
+
 interface TextFormFieldLabelProps {
-  name: string
+  value?: string
 }
 
-export function TextFormFieldLabel({ name }: TextFormFieldLabelProps) {
+export function TextFormFieldLabel({ value }: TextFormFieldLabelProps) {
+  const { name } = useTextFormField()
+
   return (
     <Label className="mb-[5px] inline-block font-bold capitalize text-white">
-      {name}
+      {value ?? name}
     </Label>
   )
 }

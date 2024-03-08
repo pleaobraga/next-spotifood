@@ -4,6 +4,9 @@ import '../src/app/globals.css'
 
 const preview: Preview = {
   parameters: {
+    backgrounds: {
+      default: 'dark',
+    },
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {

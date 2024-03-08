@@ -1,18 +1,18 @@
 import { Control } from '@radix-ui/react-form'
 
+import { useTextFormField } from './useTextFormField'
+
 interface TextFormFieldInputProps {
-  name: string
-  value?: string
   type?: 'text' | 'number'
   placeHolder?: string
 }
 
 export function TextFormFieldInput({
-  name,
-  value,
   placeHolder,
   type = 'text',
 }: TextFormFieldInputProps) {
+  const { name, handleChange, value } = useTextFormField()
+
   return (
     <Control asChild>
       <input
@@ -21,6 +21,7 @@ export function TextFormFieldInput({
         value={value}
         type={type}
         placeholder={placeHolder}
+        onChange={handleChange}
       />
     </Control>
   )
