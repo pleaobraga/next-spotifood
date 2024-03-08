@@ -17,7 +17,7 @@ type Story = StoryObj<typeof meta>
 function defaultChildren() {
   return (
     <>
-      <TextFormField.Label />
+      <TextFormField.Label value="Test Label" />
       <TextFormField.Input placeHolder="Type here" />
     </>
   )
