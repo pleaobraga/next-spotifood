@@ -1,6 +1,6 @@
 import { addSeconds, formatISO, compareAsc } from 'date-fns'
 
-import { getTokenAPI } from '../api/playlist'
+import { getTokenAPI } from '@/api/playlist'
 
 export const isTokenValid = () => {
   const tokenExpiration = localStorage.getItem('spotify_token_expiration')
