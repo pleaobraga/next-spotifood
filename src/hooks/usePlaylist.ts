@@ -6,6 +6,7 @@ import { getToken } from '@/service/spotifyAuth'
 import { getPlaylistAPI } from '@/api/playlist'
 import type { Playlist } from '@/api/playlist'
 import { useAbortFetch } from './useAbortFetch'
+import { PlaylistItem } from '@/api/playlist/playlist.interface'
 
 export function usePlaylist() {
   const { getAbortController } = useAbortFetch()
@@ -14,13 +15,13 @@ export function usePlaylist() {
   const [playlists, setPlaylists] = useState<Playlist | null>(null)
   const [playlistsTitle, setPlaylistsTitle] = useState<string | null>(null)
   const [error, setError] = useState(false)
-  const [count, setCount] = useState(0)
+  const [filteredItems, setFilteredItems] = useState<PlaylistItem[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const getSpotifyToken = async () => {
       try {
         const token = await getToken()
-
         setToken(token)
       } catch (e) {
         setError(true)
@@ -43,24 +44,40 @@ export function usePlaylist() {
           })
 
           setPlaylists(playlists)
+          setFilteredItems(playlists.items)
           setPlaylistsTitle(message)
         } catch (e) {
           if (e.code !== 'ERR_CANCELED') {
             console.log('error', e)
             setError(true)
           }
+        } finally {
+          setIsLoading(false)
         }
       }
 
       getPlaylist()
     }
-  }, [token, count])
+  }, [token])
+
+  function filterItems(searchTerm = '') {
+    if (searchTerm === '') {
+      setFilteredItems(playlists?.items as PlaylistItem[])
+    }
+
+    const filteredItems = playlists?.items.filter(({ name }) =>
+      name.toUpperCase().includes(searchTerm.toUpperCase())
+    )
+
+    setFilteredItems(filteredItems as PlaylistItem[])
+  }
 
   return {
     playlists,
-    cards: playlists?.items ?? [],
+    cards: filteredItems ?? [],
     error,
     playlistsTitle,
-    reFetch: () => setCount((state) => state + 1),
+    filterItems,
+    isLoading,
   }
 }

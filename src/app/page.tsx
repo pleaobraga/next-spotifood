@@ -1,23 +1,27 @@
 'use client'
 
+import { CircularLoader } from '@/components/Atom/CircularLoader'
 import { CardList } from '@/components/Organism/CardList'
 import { Filter } from '@/components/Organism/Filter'
-import { usePlaylist } from '../hooks/usePlaylist'
+import { usePlaylist } from '@/hooks/usePlaylist'
 
 export default function Home() {
-  const { cards, playlistsTitle, reFetch } = usePlaylist()
+  const { cards, playlistsTitle, filterItems, isLoading } = usePlaylist()
 
   return (
     <>
-      <Filter />
+      <Filter
+        onChangeFilter={(searchTerm: string) => filterItems(searchTerm)}
+      />
       <main className="flex h-full w-full justify-center">
-        <div className="container mb-[2rem] mt-[3rem] flex h-full w-full justify-center p-6">
-          <CardList cards={cards} title={playlistsTitle || 'Playlists'} />
+        <div className="mx-auto mb-[2rem] mt-[3rem] flex h-full w-full p-6 xl:container">
+          {isLoading ? (
+            <CircularLoader size={50} />
+          ) : (
+            <CardList cards={cards} title={playlistsTitle || 'Playlists'} />
+          )}
         </div>
       </main>
-      <button className="m-[3rem] bg-white p-6" onClick={reFetch}>
-        test
-      </button>
     </>
   )
 }

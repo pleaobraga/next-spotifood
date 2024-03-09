@@ -27,9 +27,7 @@ export const getPlaylistAPI = async ({
     signal,
   }
 
-  const response = await httpRequest.fetch<PlaylistResponse>(configuration)
-
-  return response
+  return httpRequest.fetch<PlaylistResponse>(configuration)
 }
 
 // --- auth ---
@@ -51,7 +49,5 @@ export const getTokenAPI = async (): Promise<APIToken> => {
     },
   }
 
-  const response = await httpRequest.fetch<APIToken>(configuration)
-
-  return response
+  return httpRequest.fetch<APIToken>(configuration)
 }

@@ -21,8 +21,10 @@ function CardList({ cards, title }: CardListProps) {
 
   return (
     <div>
-      <h2 className="text-3xl font-bold text-white">{title}</h2>
-      <div className="mt-[2rem] flex flex-wrap gap-[1rem]">
+      <h2 className="text-center text-3xl font-bold text-white xl:text-left">
+        {title}
+      </h2>
+      <div className="mt-[2rem] flex flex-wrap justify-center gap-[1rem] xl:justify-start">
         {cards.map(({ external_urls, id, name, images }) => {
           return (
             <Card
