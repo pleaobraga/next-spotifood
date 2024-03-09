@@ -1,10 +1,14 @@
-import { type FetchProps, httpRequest } from '../HTTPRequest/HTTPRequest'
+import {
+  type FetchProps,
+  type CancelableAPIProps,
+  httpRequest,
+} from '../HTTPRequest/HTTPRequest'
 import { type APIToken, type PlaylistResponse } from './playlist.interface'
 
 const BASE_SPOTIFY_API_URL =
   'https://api.spotify.com/v1/browse/featured-playlists'
 
-interface getPlaylistAPIProps {
+interface getPlaylistAPIProps extends CancelableAPIProps {
   filter?: string
   token: string
 }
@@ -12,6 +16,7 @@ interface getPlaylistAPIProps {
 export const getPlaylistAPI = async ({
   filter = '',
   token,
+  signal,
 }: getPlaylistAPIProps) => {
   const configuration: FetchProps = {
     method: 'get',
@@ -19,6 +24,7 @@ export const getPlaylistAPI = async ({
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    signal,
   }
 
   const response = await httpRequest.fetch<PlaylistResponse>(configuration)

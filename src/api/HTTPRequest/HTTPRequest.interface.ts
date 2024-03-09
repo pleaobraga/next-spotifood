@@ -3,8 +3,13 @@ export interface FetchProps {
   url: string
   data?: object
   headers?: object
+  signal?: object
 }
 
 export interface HTTPRequest {
   fetch<T>(props: FetchProps): Promise<T>
+}
+
+export interface CancelableAPIProps {
+  signal: object
 }

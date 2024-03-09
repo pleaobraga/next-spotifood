@@ -5,12 +5,16 @@ import { useEffect, useState } from 'react'
 import { getToken } from '@/service/spotifyAuth'
 import { getPlaylistAPI } from '@/api/playlist'
 import type { Playlist } from '@/api/playlist'
+import { useAbortFetch } from './useAbortFetch'
 
 export function usePlaylist() {
+  const { getAbortController } = useAbortFetch()
+
   const [token, setToken] = useState<string | null>(null)
   const [playlists, setPlaylists] = useState<Playlist | null>(null)
   const [playlistsTitle, setPlaylistsTitle] = useState<string | null>(null)
   const [error, setError] = useState(false)
+  const [count, setCount] = useState(0)
 
   useEffect(() => {
     const getSpotifyToken = async () => {
@@ -28,31 +32,35 @@ export function usePlaylist() {
 
   useEffect(() => {
     if (token) {
+      const ctrl = getAbortController()
+
       const getPlaylist = async () => {
         try {
           const { message, playlists } = await getPlaylistAPI({
             filter: '',
             token,
+            signal: ctrl.signal,
           })
 
           setPlaylists(playlists)
           setPlaylistsTitle(message)
         } catch (e) {
-          console.log('error', e)
-          setError(true)
+          if (e.code !== 'ERR_CANCELED') {
+            console.log('error', e)
+            setError(true)
+          }
         }
       }
 
       getPlaylist()
     }
-  }, [token])
-
-  console.log()
+  }, [token, count])
 
   return {
     playlists,
     cards: playlists?.items ?? [],
     error,
     playlistsTitle,
+    reFetch: () => setCount((state) => state + 1),
   }
 }
