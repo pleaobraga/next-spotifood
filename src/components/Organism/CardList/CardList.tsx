@@ -11,16 +11,17 @@ interface CardListProps {
       spotify: string
     }
   }[]
+  title: string
 }
 
-function CardList({ cards }: CardListProps) {
+function CardList({ cards, title }: CardListProps) {
   if (cards.length === 0) {
     return <h2 className="text-xl font-bold text-white">No Item to display</h2>
   }
 
   return (
     <div>
-      <h2 className="text-3xl font-bold text-white">Playlists</h2>
+      <h2 className="text-3xl font-bold text-white">{title}</h2>
       <div className="mt-[2rem] flex flex-wrap gap-[1rem]">
         {cards.map(({ external_urls, id, name, images }) => {
           return (

@@ -1,4 +1,5 @@
-import axios from 'axios'
+import { type FetchProps, httpRequest } from '../HTTPRequest/HTTPRequest'
+import { type APIToken, type PlaylistResponse } from './playlist.interface'
 
 const BASE_SPOTIFY_API_URL =
   'https://api.spotify.com/v1/browse/featured-playlists'
@@ -8,12 +9,22 @@ interface getPlaylistAPIProps {
   token: string
 }
 
-export const getPlaylistAPI = ({ filter = '', token }: getPlaylistAPIProps) =>
-  axios.get(`${BASE_SPOTIFY_API_URL}${filter}`, {
+export const getPlaylistAPI = async ({
+  filter = '',
+  token,
+}: getPlaylistAPIProps) => {
+  const configuration: FetchProps = {
+    method: 'get',
+    url: `${BASE_SPOTIFY_API_URL}${filter}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  })
+  }
+
+  const response = await httpRequest.fetch<PlaylistResponse>(configuration)
+
+  return response
+}
 
 // --- auth ---
 
@@ -23,21 +34,18 @@ const auth = btoa(
   `${process.env.NEXT_PUBLIC_APP_SPOTIFY_CLIENT_ID}:${process.env.NEXT_PUBLIC_APP_SPOTIFY_CLIENT_SECRET}`
 )
 
-const options = {
-  method: 'POST',
-  headers: new Headers({
-    'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization: `Basic ${auth}`,
-  }),
-  body: 'grant_type=client_credentials',
-}
-
-export const getTokenAPI = async () => {
-  try {
-    const response = await fetch(SPOTIFY_TOKEN_API, options)
-    const result = await response.json()
-    return result
-  } catch (e) {
-    return e
+export const getTokenAPI = async (): Promise<APIToken> => {
+  const configuration: FetchProps = {
+    method: 'post',
+    url: SPOTIFY_TOKEN_API,
+    data: { grant_type: 'client_credentials' },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: `Basic ${auth}`,
+    },
   }
+
+  const response = await httpRequest.fetch<APIToken>(configuration)
+
+  return response
 }

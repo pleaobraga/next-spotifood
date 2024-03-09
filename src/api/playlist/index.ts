@@ -1,2 +1,2 @@
 export { getPlaylistAPI, getTokenAPI } from './playlist'
-export type { Playlist } from './playlist.interface'
+export type { Playlist, APIToken, PlaylistResponse } from './playlist.interface'

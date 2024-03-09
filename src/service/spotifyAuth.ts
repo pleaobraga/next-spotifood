@@ -13,7 +13,7 @@ export const isTokenValid = () => {
   return compareAsc(new Date(tokenExpiration), new Date()) === 1
 }
 
-export const getNewToken = async () => {
+export const getNewToken = async (): Promise<string> => {
   try {
     const { expires_in, access_token } = await getTokenAPI()
 
@@ -24,11 +24,11 @@ export const getNewToken = async () => {
 
     return access_token
   } catch (e) {
-    return e
+    throw Error()
   }
 }
 
-export const getToken = async () => {
+export const getToken = async (): Promise<string | null> => {
   if (isTokenValid()) {
     return localStorage.getItem('spotify_token')
   }

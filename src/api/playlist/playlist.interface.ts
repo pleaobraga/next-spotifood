@@ -44,3 +44,14 @@ export interface Playlist {
   previous: null | string
   total: number
 }
+
+export interface PlaylistResponse {
+  message: string
+  playlists: Playlist
+}
+
+export interface APIToken {
+  access_token: string
+  expires_in: number
+  token_type: 'Bearer'
+}

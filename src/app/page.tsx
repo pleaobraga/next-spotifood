@@ -5,14 +5,14 @@ import { Filter } from '@/components/Organism/Filter'
 import { usePlaylist } from '../hooks/usePlaylist'
 
 export default function Home() {
-  const { cards } = usePlaylist()
+  const { cards, playlistsTitle } = usePlaylist()
 
   return (
     <>
       <Filter />
       <main className="flex h-full w-full justify-center">
         <div className="container mt-[3rem] flex h-full w-full justify-center p-6">
-          <CardList cards={cards} />
+          <CardList cards={cards} title={playlistsTitle || 'Playlists'} />
         </div>
       </main>
     </>
