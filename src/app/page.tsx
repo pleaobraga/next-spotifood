@@ -6,7 +6,7 @@ export default function Home() {
     <>
       <Filter />
       <main>
-        <div className="mt-[3rem] h-full w-full">
+        <div className="container mt-[3rem] h-full w-full">
           <CardList cards={[]} />
         </div>
       </main>
