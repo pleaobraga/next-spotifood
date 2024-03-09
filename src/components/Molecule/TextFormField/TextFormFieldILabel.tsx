@@ -1,3 +1,5 @@
+'use client'
+
 import { Label } from '@radix-ui/react-form'
 
 import { useTextFormField } from './useTextFormField'

@@ -1,10 +1,12 @@
+'use client'
+
 import { TextFormField } from '@/components/Molecule/TextFormField'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { Form } from '@radix-ui/react-form'
 
 function Filter() {
   return (
-    <header className="w-full bg-gray-400 p-6">
+    <header className="sticky top-0 w-full bg-gray-800 p-6 shadow">
       <div className="container mx-auto flex items-center gap-[3rem]">
         <h1 className="text-[2rem] font-bold text-green">Spotifood</h1>
         <Form className="w-4/5">

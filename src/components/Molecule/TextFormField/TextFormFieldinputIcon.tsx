@@ -1,3 +1,5 @@
+'use client'
+
 import { TextFormFieldInput } from './TextFormFieldinput'
 
 interface TextFormFieldInputIconProps {
@@ -13,7 +15,7 @@ export function TextFormFieldInputIcon({
 }: TextFormFieldInputIconProps) {
   return (
     <div className="relative">
-      <Icon className="absolute left-[10px] top-[18px] h-[1.8rem] w-[1.8rem]" />
+      <Icon className="absolute left-[14px] top-[18px] h-[1.6rem] w-[1.6rem]" />
       <TextFormFieldInput
         className="pl-[3rem]"
         placeHolder={placeHolder}

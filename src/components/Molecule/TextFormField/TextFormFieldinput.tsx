@@ -1,3 +1,5 @@
+'use client'
+
 import { Control } from '@radix-ui/react-form'
 import { twMerge } from 'tailwind-merge'
 
@@ -20,7 +22,7 @@ export function TextFormFieldInput({
     <Control asChild>
       <input
         className={twMerge(
-          'w-full rounded border border-solid border-gray-100 bg-gray-400 px-[14px] py-[18.5px] text-white placeholder-gray-100 hover:border-white focus:border-green',
+          'w-full rounded border-2 border-solid border-gray-100 bg-gray-800 px-[14px] py-[18.5px] text-white placeholder-gray-100 hover:border-white focus:border-green',
           className
         )}
         name={name}

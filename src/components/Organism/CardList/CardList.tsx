@@ -15,7 +15,7 @@ interface CardListProps {
 
 function CardList({ cards }: CardListProps) {
   if (cards.length === 0) {
-    return <h2 className="font-bold text-white">No Item to display</h2>
+    return <h2 className="text-xl font-bold text-white">No Item to display</h2>
   }
 
   return (
