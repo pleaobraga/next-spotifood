@@ -8,7 +8,7 @@ interface CardProps {
 
 function Card({ imgSrc, link, name }: CardProps) {
   return (
-    <div className="mx-[0.5rem] mt-[1rem] flex w-[230px] justify-center rounded bg-gray-400 p-[16px] shadow hover:bg-gray-200">
+    <div className="mx-[0.5rem] mt-[1rem] flex w-[230px] justify-center rounded bg-gray-800 p-[16px] shadow hover:bg-gray-200">
       <a
         className="flex w-full flex-col no-underline"
         href={link}

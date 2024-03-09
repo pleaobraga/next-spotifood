@@ -1,4 +1,4 @@
-export const cardMock = {
+export const cardInfoMock = {
   id: 'test',
   name: 'test',
   external_urls: {
@@ -15,9 +15,9 @@ export const cardListMockFactory = (number = 6) => {
   const list = []
 
   for (let i = 0; i < number; i++) {
-    const id = cardMock.id + i
+    const id = cardInfoMock.id + i
 
-    list.push({ ...cardMock, id })
+    list.push({ ...cardInfoMock, id })
   }
 
   return list
