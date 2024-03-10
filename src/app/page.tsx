@@ -6,7 +6,8 @@ import { Filter } from '@/components/Organism/Filter'
 import { usePlaylist } from '@/hooks/usePlaylist'
 
 export default function Home() {
-  const { cards, playlistsTitle, filterItems, isLoading } = usePlaylist()
+  const { cards, playlistsTitle, filterItems, isLoading, refetch } =
+    usePlaylist()
 
   return (
     <>
@@ -22,6 +23,7 @@ export default function Home() {
           )}
         </div>
       </main>
+      <button onClick={refetch}>refetch</button>
     </>
   )
 }

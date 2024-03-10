@@ -1,22 +1,20 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { getToken } from '@/service/spotifyAuth'
-import { getPlaylistAPI } from '@/api/playlist'
 import type { Playlist } from '@/api/playlist'
-import { useAbortFetch } from './useAbortFetch'
 import { PlaylistItem } from '@/api/playlist/playlist.interface'
+import { createFunctionGetAPI } from '@/api/playlist/playlist'
 
 export function usePlaylist() {
-  const { getAbortController } = useAbortFetch()
-
   const [token, setToken] = useState<string | null>(null)
   const [playlists, setPlaylists] = useState<Playlist | null>(null)
   const [playlistsTitle, setPlaylistsTitle] = useState<string | null>(null)
   const [error, setError] = useState(false)
   const [filteredItems, setFilteredItems] = useState<PlaylistItem[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [count, setCount] = useState(0)
 
   useEffect(() => {
     const getSpotifyToken = async () => {
@@ -31,26 +29,26 @@ export function usePlaylist() {
     getSpotifyToken()
   }, [])
 
+  const getPlaylist1 = useMemo(() => createFunctionGetAPI(), [])
+
   useEffect(() => {
     if (token) {
-      const ctrl = getAbortController()
-
       const getPlaylist = async () => {
         try {
-          const { message, playlists } = await getPlaylistAPI({
+          const a = await getPlaylist1({
             filter: '',
             token,
-            signal: ctrl.signal,
           })
 
-          setPlaylists(playlists)
-          setFilteredItems(playlists.items)
-          setPlaylistsTitle(message)
-        } catch (e) {
-          if (e.code !== 'ERR_CANCELED') {
-            console.log('error', e)
-            setError(true)
+          if (a) {
+            const { message, playlists } = a
+            setPlaylists(playlists)
+            setFilteredItems(playlists.items)
+            setPlaylistsTitle(message)
           }
+        } catch (e) {
+          console.log('error', e)
+          setError(true)
         } finally {
           setIsLoading(false)
         }
@@ -58,7 +56,7 @@ export function usePlaylist() {
 
       getPlaylist()
     }
-  }, [token])
+  }, [token, count, getPlaylist1])
 
   function filterItems(searchTerm = '') {
     if (searchTerm === '') {
@@ -79,5 +77,6 @@ export function usePlaylist() {
     playlistsTitle,
     filterItems,
     isLoading,
+    refetch: () => setCount((state) => state + 1),
   }
 }
